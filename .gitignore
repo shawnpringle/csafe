@@ -68,3 +68,9 @@ vcpkg_installed/
 Testing/
 .cache/
 test1
+test64
+test2
+*~
+testcsint
+testbinmanip
+ref
