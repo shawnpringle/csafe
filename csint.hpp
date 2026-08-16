@@ -1024,12 +1024,38 @@ inline istream& operator >> (istream& in, csint64_t& i) {
 
 
 
+// sum csint1_t..csint4_t types.
+// normally ecsbbi<n> + ecsbbi<m> = ecssssi<max(n,m)+1> because
+// max(n,m)+1 may be as high as 5.
 template <int n, int m>
-ecssssi<std::max(n,m)+1> operator + (const ecsbbbi<n> a, const ecsbbbi<m> b) {
+ecsbbbi<std::max(n,m)+1> operator + (const ecsbbbi<n> a, const ecsbbbi<m> b) {
   if (std::max(n,m)+1 > 16) throw &overflow;
   ecssssi<std::max(n,m)+1> c((signed short)(signed char)a + (signed short)(signed char)b);
   return c;
 }
+
+
+template <int n, int m>
+ecsbbsi<std::max(n,m)+1> operator + (const ecsbbbi<n> a, const ecsbbsi<m> b) {
+  if (std::max(n,m)+1 > 16) throw &overflow;
+  ecssssi<std::max(n,m)+1> c((signed short)(signed char)a + (signed short)(signed char)b);
+  return c;
+}
+
+template <int n, int m>
+ecsbbsi<std::max(n,m)+1> operator + (const ecsbbsi<n> a, const ecsbbbi<m> b) {
+  if (std::max(n,m)+1 > 16) throw &overflow;
+  ecssssi<std::max(n,m)+1> c((signed short)(signed char)a + (signed short)(signed char)b);
+  return c;
+}
+
+template <int n, int m>
+ecsbbsi<std::max(n,m)+1> operator + (const ecsbbsi<n> a, const ecsbbsi<m> b) {
+  if (std::max(n,m)+1 > 16) throw &overflow;
+  ecssssi<std::max(n,m)+1> c((signed short)(signed char)a + (signed short)(signed char)b);
+  return c;
+}
+
 
 ecsbbbi<2> operator + (const ecsbbbi<1> a, const ecsbbbi<1> b);
 static inline ecsbbbi<3> operator + (const ecsbbbi<2> a, const ecsbbbi<1> b) {

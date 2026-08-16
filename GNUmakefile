@@ -31,7 +31,7 @@ safe64.o: safe64.cpp safe64.h
 	g++ -ggdb -fPIC -std=c++23 safe64.cpp -c
 
 test1: test1.cpp safeint1.cpp safeint2.cpp safeint.h
-	g++ -ggdb -std=c++20 test1.cpp safeint1.cpp safeint2.cpp -lboost_unit_test_framework -o test1
+	g++ -ggdb -std=c++23 test1.cpp safeint1.cpp safeint2.cpp -lboost_unit_test_framework -o test1
 
 test2: test2.cpp safeint1.cpp safeint2.cpp safeint.h
 	g++ -ggdb -std=c++20 test2.cpp safeint1.cpp safeint2.cpp -o test2
@@ -55,3 +55,4 @@ mostlyclean:
 	rm -f *.o
 
 .PHONY: all clean mostlyclean test csintsyn
+
