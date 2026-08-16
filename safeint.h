@@ -9,7 +9,6 @@ using namespace std;
 #include <exception>
 template <int n> class safeint {
     public:
-    static signed char max();
     safeint(int);
     safeint(const safeint<n>& that);
     safeint<n>& operator = (const safeint<n>& that);
@@ -23,6 +22,8 @@ class safeint<1> {
 
     static signed char min();
     static signed char max();
+    safeint() {
+    }
     safeint(int x) {
         if (x != 0 && x != -1) throw &overflow;
         data = (signed char)x;
@@ -53,6 +54,9 @@ class safeint<1> {
         safeint<1> save(*this);
         data += 1;
         return save;
+    }
+    operator int64_t() const {
+      return data;
     }
 
     friend class safeint<2>;
@@ -105,6 +109,9 @@ class safeint<2> {
         return save;
     }
 
+    operator int64_t() const {
+      return data;
+    }
 
     friend safeint<1>::safeint(safeint<2>& that);
 };
@@ -216,3 +223,7 @@ class safeint<7> {
         return save;
     }
 };
+
+
+extern bool operator == (safeint<2> si, int64_t i);
+extern bool operator == (int64_t i, safeint<2> si);

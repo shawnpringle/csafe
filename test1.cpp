@@ -1,32 +1,39 @@
 #include "safeint.h"
 #include <iostream>
+#define BOOST_TEST_MODULE Test1
+#define BOOST_TEST_DYN_LINK
+#include <boost/test/unit_test.hpp>
 
-int main() {
+
+BOOST_AUTO_TEST_CASE( M1 ) {
 
    safeint<1> a(-1);
-   a++;   // okay.
-   try {
-     a++;   // exception thrown.
-     cerr << "Error.  An exception should have been thrown here." << endl;
-   } catch (overflow_error* e) {
-     // good
-   } catch (...) {
-     // overflow exception
-   }
+   
+   BOOST_CHECK_EQUAL( 0, (int64_t)a++);   // okay.
+   BOOST_CHECK_THROW( a++, overflow_error*);
+}
 
-   safeint<2> b(-2);
-   ++b;
-   b++;
-   ++b;
-   try {
-    ++b;
-    cerr << "Error.  An exception should have been thrown here." << endl;
-   } catch (...) {
+BOOST_AUTO_TEST_CASE( M2 ) {
+  safeint<2> b(-2);
+  
+  BOOST_CHECK_EQUAL( b, -2 );
+  
+  BOOST_CHECK_EQUAL( ++b, -1 );
+  
+  BOOST_CHECK_EQUAL( b++, -1 );
+  BOOST_CHECK_EQUAL( ++b, 1 );
+  BOOST_CHECK_THROW( ++b, overflow_error* );
+}
 
-   }
+BOOST_AUTO_TEST_CASE( ASSIGN_TO_SMALL1 ) {
+  safeint<1> a;
+  safeint<2> b(-2);
+  
+  BOOST_CHECK_THROW( a = b, overflow_error* );
+}
 
-   b = a;
 
+void dummy() {
    // // error
    // a = b;
 
@@ -34,7 +41,7 @@ int main() {
     safeint<1> d(0);
 
     // returns a safeint<2>
-    b = c+d;
+    auto b = c+d;
 
     c = -1;
     d = -1;

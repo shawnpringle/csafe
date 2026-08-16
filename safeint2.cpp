@@ -43,3 +43,11 @@ signed char safeint<2>::max() {
 signed char safeint<2>::min() {
     return -2;
 }
+
+bool operator == (safeint<2> si, int64_t i) {
+  return si.data == i;
+}
+
+bool operator == (int64_t i, safeint<2> si) {
+  return i == si.data;
+}
