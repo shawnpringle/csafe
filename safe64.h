@@ -113,3 +113,10 @@ class safe64_t {
 
 extern ostream& operator << (ostream& out, const safe64_t& i);
 extern istream& operator >> (istream& in, safe64_t& i);
+#define declareOP(op) extern safe64_t operator op (const safe64_t& a, const safe64_t& b); 
+
+declareOP(||)
+declareOP(|)
+declareOP(&&)
+declareOP(&)
+declareOP(^)

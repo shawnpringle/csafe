@@ -1,5 +1,5 @@
-#include "safe64.h"
 #include <assert.h>
+#include "safe64.h"
 std::overflow_error overflow("larger than type");
 std::overflow_error negative_to_unsigned("negative to unsigned");
 std::domain_error divide_by_zero("divide by zero");
@@ -136,9 +136,20 @@ defineOP(>=)
 defineOP(<)
 defineOP(>)
 
+#undef defineOP
+#define defineOP(op) safe64_t operator op (const safe64_t &a, const safe64_t& b) {\
+  return (int64_t)a op (int64_t)b;\
+}
+
+defineOP(||)
+defineOP(|)
+defineOP(&&)
+defineOP(&)
+defineOP(^)
+
+
 int64_t safe64_t::power2(unsigned short a) {
   if (a > 63) throw &overflow;
-  if (a < 0) throw &negative_to_unsigned;
   uint64_t v(1);
   while (a) {
     v*=2;
